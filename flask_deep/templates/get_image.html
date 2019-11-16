@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flask Index</title>
+</head>
+<style type="text/css">
+	.refer_img{
+		width: 400px; 
+		height: 400px;
+	}
+	.refer_img:hover{opacity: 0.5; cursor: pointer;}
+	.refer_img:onclick{opacity: 0.5; cursor: pointer;}
+
+	#refer_img1{
+		background-image: url("./static/images/rain_princess.jpg");
+		background-size: cover;
+		background-repeat:no-repeat;
+	}
+	#refer_img2{
+		background-image: url("./static/images/the_stary_night.JPG");
+		background-size: cover;
+	}
+	#refer_img3{
+		background-image: url("./static/images/scream.jpg");
+		background-size: cover;
+		background-repeat:no-repeat;
+	}
+	input[type="radio"]{
+		width: 25px; 
+		height: 25px;
+	}
+</style>
+<script type="text/javascript"></script>
+<body>	
+	<br>
+	<h1 align="center">Neural Sytle Transfer</h1>
+	<br>
+	<form align="center" action="/post_image" method="POST" enctype="multipart/form-data">
+	<h2 align="center">Reference Images</h2>
+	<table align="center">
+		<tr>
+			<td><img class="refer_img" id="refer_img1" src="./static/images/rain_princess.jpg"></td>
+			<td><img class="refer_img" id="refer_img2" src="./static/images/the_stary_night.JPG"></td>
+			<td><img class="refer_img" id="refer_img3" src="./static/images/scream.jpg"></td>
+			<td><img class="refer_img" id="refer_img3" src="./static/images/zentangle_art.jpg"></td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="refer_img" value="rain_princess.jpg"></td>
+			<td><input type="radio" name="refer_img" value="the_stary_night.JPG"></td>
+			<td><input type="radio" name="refer_img" value="scream.jpg"></td>
+			<td><input type="radio" name="refer_img" value="zentangle_art.jpg"></td>
+		</tr>
+
+	</table>
+	<!-- <input type="text" name="firstname" value="Mickey"> -->
+	<br><br><br><br>
+	<h2 align="center">Target Image</h2>
+		<input type="file" name="user_img" value="userIMgage"/>
+		<input type="submit" value="확인"/>
+	</form>
+
+</body>
+</html> 

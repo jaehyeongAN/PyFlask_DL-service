@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flask image post</title>
+</head>
+<style type="text/css">
+	.nst_img{
+		width: 500px; 
+		height: 400px;
+	}
+	.nst_result_img{
+		width: 800px; 
+		height: 400px;
+	}
+
+</style>
+<body>
+	<br>
+	<table align="center">
+		<tr>
+			<td><h2 align="center">Reference Image</h2></td>
+			<td><h2 align="center">Target Image</h2></td>
+		</tr>
+		<tr>
+			<td><img class='nst_img' src="{{url_for('static', filename=refer_img)}}"></td>
+			<td><img class=nst_img src="{{url_for('static', filename=user_img)}}"></td>
+		</tr>
+		<tr>
+			<td colspan="2"><h2 align="center">Transfer Image</h2></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><img class="nst_result_img" src="{{url_for('static', filename=transfer_img)}}"></td>
+		</tr>
+	</table>
+	<br>
+</body>
+</html>
