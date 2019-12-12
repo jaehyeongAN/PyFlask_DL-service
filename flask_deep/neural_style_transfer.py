@@ -157,7 +157,7 @@ def main(refer_img_path, target_img_path):
 
 	evaluator = Evaluator()
 	refer_img_name = refer_img_path.split('.')[0].split('/')[-1]
-	result_prefix = 'flask_deep/static/images/style_transfer_result_'+refer_img_name
+	result_prefix = 'flask_deep/static/images/nst_result_'+refer_img_name
 	iterations = 30
 
 	# 뉴럴 스타일 트랜스퍼의 손실을 최소화하기 위해 생성된 이미지에 대해 L-BFGS 최적화를 수행합니다
