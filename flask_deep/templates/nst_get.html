@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flask for Deep ConvNet</title>
+</head>
+<script type="text/javascript">
+	function previewImage(targetObj, view_area) {
+	var preview = document.getElementById(view_area); //div id
+	var ua = window.navigator.userAgent;
+
+	var files = targetObj.files;
+	for ( var i = 0; i < files.length; i++) {
+		var file = files[i];
+		var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+		if (!file.type.match(imageType))
+			continue;
+		var prevImg = document.getElementById("prev_" + view_area); //이전에 미리보기가 있다면 삭제
+		if (prevImg) {
+			preview.removeChild(prevImg);
+		}
+		var img = document.createElement("img"); 
+		img.id = "prev_" + view_area;
+		img.classList.add("obj");
+		img.file = file;
+		img.style.width = '700px'; 
+		img.style.height = '400px';
+		preview.appendChild(img);
+		if (window.FileReader) { // FireFox, Chrome, Opera 확인.
+			var reader = new FileReader();
+			reader.onloadend = (function(aImg) {
+				return function(e) {
+					aImg.src = e.target.result;
+				};
+			})(img);
+			reader.readAsDataURL(file);
+		} else { // safari is not supported FileReader
+			//alert('not supported FileReader');
+			if (!document.getElementById("sfr_preview_error_"
+					+ view_area)) {
+				var info = document.createElement("p");
+				info.id = "sfr_preview_error_" + view_area;
+				info.innerHTML = "not supported FileReader";
+				preview.insertBefore(info, null);
+			}
+		}
+	}
+}
+</script>
+<style type="text/css">
+	/*Logo*/
+	#h_img{width: 30px; height: 30px;}
+	/*카테고리*/
+	#layer_fixed
+	{
+		width:100%;
+		height: 130px;
+		color: #555;
+		position:fixed;
+		z-index:999;
+		top:0px;
+		left:0px;
+		right: 0px;
+		-webkit-box-shadow: 0 1px 2px 0 #777;
+		box-shadow: 0 1px 2px 0 #777;
+		background-color: white;
+	}
+	/*메뉴*/
+	#menu td{font-weight: bold; font-size: 20px;-webkit-transition: color 0.6s;  }
+	#menu td:hover{color: #CC3D3D; cursor: pointer;}
+
+	/*Reference Images*/
+	.refer_img{
+		width: 100%; 
+		height: auto;
+	}
+	.refer_img:hover{opacity: 0.5; cursor: pointer;}
+	.refer_img:onclick{opacity: 0.5; cursor: pointer;}
+	input[type="radio"]{
+		width: 25px; 
+		height: 25px;
+	}
+</style>
+<body>
+	<!-- 상단 카테고리 -->
+	<div id="layer_fixed" align="center">
+	<header>
+		<h1 align="center" style="color: #353535;"> Flask for Deep ConvNet</h1>
+		</table> 
+		<table id='menu' style=" text-align: center; " >
+			<tr>
+				<td onclick="location.href='/'">Home</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/convnet_info'">ConvNet?</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/object_detection_get'">Object Detection</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/nst_get'">Neural Style Transfer</td>
+			</tr>
+		</table>
+	</header>
+	</div>
+	<br><br><br><br><br><br>
+
+	<h1 align="center">Neural Sytle Transfer</h1>
+	
+	<!-- Reference Image 라디오 버튼 선택 -->
+	<form align="center" action="/nst_post" method="POST" enctype="multipart/form-data">
+		<h2 align="center" style="color: #353535;">Reference Images</h2>
+		<table align="center">
+			<tr>
+				<td><img class="refer_img" src="./static/images/nst_get/nst_reference1.jpg"></td>
+				<td><img class="refer_img" src="./static/images/nst_get/nst_reference2.JPG"></td>
+				<td><img class="refer_img" src="./static/images/nst_get/nst_reference3.jpg"></td>
+				<td><img class="refer_img" src="./static/images/nst_get/nst_reference4.jpg"></td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="refer_img" value="nst_reference1.jpg"></td>
+				<td><input type="radio" name="refer_img" value="nst_reference2.JPG"></td>
+				<td><input type="radio" name="refer_img" value="nst_reference3.jpg"></td>
+				<td><input type="radio" name="refer_img" value="nst_reference4.jpg"></td>
+			</tr>
+		</table>
+		<br>
+		<!-- Target Image 사용자 업로드 -->
+		<h2 align="center" style="color: #353535;">Target Image</h2>
+		<input type="file" name="user_img" id="user_img" value="userImage" onchange="previewImage(this,'view_area')"/>
+		<input type="submit" value="확인"/>
+		<br><br>
+		<div align="center" id='view_area'></div>
+	</form>
+	<br><br><br>
+</body>
+</html> 

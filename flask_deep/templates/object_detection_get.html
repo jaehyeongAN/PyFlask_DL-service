@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flask for Deep ConvNet</title>
+</head>
+<script type="text/javascript">
+	function previewImage(targetObj, view_area) {
+	var preview = document.getElementById(view_area); //div id
+	var ua = window.navigator.userAgent;
+
+	var files = targetObj.files;
+	for ( var i = 0; i < files.length; i++) {
+		var file = files[i];
+		var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+		if (!file.type.match(imageType))
+			continue;
+		var prevImg = document.getElementById("prev_" + view_area); //이전에 미리보기가 있다면 삭제
+		if (prevImg) {
+			preview.removeChild(prevImg);
+		}
+		var img = document.createElement("img"); 
+		img.id = "prev_" + view_area;
+		img.classList.add("obj");
+		img.file = file;
+		img.style.width = '800px'; 
+		img.style.height = '500px';
+		preview.appendChild(img);
+		if (window.FileReader) { // FireFox, Chrome, Opera 확인.
+			var reader = new FileReader();
+			reader.onloadend = (function(aImg) {
+				return function(e) {
+					aImg.src = e.target.result;
+				};
+			})(img);
+			reader.readAsDataURL(file);
+		} else { // safari is not supported FileReader
+			//alert('not supported FileReader');
+			if (!document.getElementById("sfr_preview_error_"
+					+ view_area)) {
+				var info = document.createElement("p");
+				info.id = "sfr_preview_error_" + view_area;
+				info.innerHTML = "not supported FileReader";
+				preview.insertBefore(info, null);
+			}
+		}
+	}
+}
+</script>
+<style type="text/css">
+	/*Logo*/
+	#h_img{width: 30px; height: 30px;}
+	/*카테고리*/
+	#layer_fixed
+	{
+		width:100%;
+		height: 130px;
+		color: #555;
+		position:fixed;
+		z-index:999;
+		top:0px;
+		left:0px;
+		right: 0px;
+		-webkit-box-shadow: 0 1px 2px 0 #777;
+		box-shadow: 0 1px 2px 0 #777;
+		background-color: white;
+	}
+	/*메뉴*/
+	#menu td{font-weight: bold; font-size: 20px;-webkit-transition: color 0.6s;  }
+	#menu td:hover{color: #CC3D3D; cursor: pointer;}
+
+	#contents-box{
+		position: fixed;
+		width: 100%;
+		left: 0px;
+		right: 0px;
+	}
+
+	#img_box{
+		text-align: center;
+	}
+
+	#view_area{
+		position:relative;
+		color: black; 
+		border: 0px solid black; 
+		display: inline; 
+	}
+</style>
+
+<body>
+	<!-- 상단 카테고리 -->
+	<div id="layer_fixed" align="center">
+	<header>
+		<h1 align="center" style="color: #353535;"> Flask for Deep ConvNet</h1>
+		</table> 
+		<table id='menu' style=" text-align: center; " >
+			<tr>
+				<td onclick="location.href='/'">Home</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/convnet_info'">ConvNet?</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/object_detection_get'">Object Detection</td>
+				<td width="20px"></td>
+				<td onclick="location.href='/nst_get'">Neural Style Transfer</td>
+			</tr>
+		</table>
+	</header>
+	</div>
+	<br><br><br><br><br><br>
+
+	<h1 align="center">Obejct Detection with YOLO-V2</h1>
+	<div id="img-box" align="center">
+		<img style="width: 50%" src="/static/images/object_detection_get/yolo-architecture.jpg">
+		<br>
+	</div>
+	
+	<!-- Detection할 이미지 업로드 -->
+	<form align="center" action="/object_detection_post" method="POST" enctype="multipart/form-data">
+		<h2 style="color: #353535;">Upload Your Image</h2>
+		<input type="file" name="object_img" id="object_img" value="object_img" onchange="previewImage(this,'view_area')"/>
+		<input type="submit" value="확인"/>
+		<br><br>
+		<div align="center" id='view_area'></div>
+	</form>
+</body>
+</html>
