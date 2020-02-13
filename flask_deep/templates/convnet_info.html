@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<title>Flask for Deep ConvNet</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Flask for Deep ConvNet</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+	 $(function(){
+		$(window).scroll(function(){
+		var navbar = $(this).scrollTop();
+		console.log(navbar);
+		// var $header = $('header');
+		var $navbar_tag = $('.navbar')
+		if(navbar > 10){
+			$navbar_tag.addClass('activated');
+		}else{
+			$navbar_tag.removeClass('activated');
+		}
+	})
+	})
+</script>
 <style type="text/css">
+	body{
+		font-family: Objective,sans-serif;
+	}
 	/*Logo*/
 	#h_img{width: 30px; height: 30px;}
 	/*카테고리*/
-	#layer_fixed
-	{
+	header{
 		width:100%;
-		height: 130px;
-		color: #555;
 		position:fixed;
-		z-index:999;
-		top:0px;
-		left:0px;
-		right: 0px;
-		-webkit-box-shadow: 0 1px 2px 0 #777;
-		box-shadow: 0 1px 2px 0 #777;
-		background-color: white;
 	}
-	/*메뉴*/
-	#menu td{font-weight: bold; font-size: 20px;-webkit-transition: color 0.6s;  }
-	#menu td:hover{color: #CC3D3D; cursor: pointer;}
-
-	#contents-box{
-		position: fixed;
-		width: 100%;
-		left: 0px;
-		right: 0px;
+	.navbar{
+		opacity: 0.8;
 	}
-	
-	.od_result_img{
-		width: 1000px; 
-		height: 600px;
+	.navbar.activated{
+		opacity: 1;
+	}
+	.nav-link{
+		font-weight: bold;
+	}
+	.side-page-main-div{
+		padding-top: 100px;
 	}
 </style>
 <body>
 	<!-- 상단 카테고리 -->
-	<div id="layer_fixed" align="center">
 	<header>
-		<h1 align="center" style="color: #353535;"> Flask for Deep ConvNet</h1>
-		</table> 
-		<table id='menu' style=" text-align: center; " >
-			<tr>
-				<td onclick="location.href='/'">Home</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/convnet_info'">ConvNet?</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/object_detection_get'">Object Detection</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/nst_get'">Neural Style Transfer</td>
-			</tr>
-		</table>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="/"><h3 style="color: #8C1DF3">Flask for DeepConvNet</h3></a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
+		      <li class="nav-item active"><a class="nav-link" href="/convnet_info">ConvNet?</a></li>
+		      <li class="nav-item"><a class="nav-link" href="/object_detection_get">Object Detection</a></li>
+		      <li class="nav-item"><a class="nav-link" href="/nst_get">Neural Style Transfer</a></li>
+		    </ul>
+		  </div>
+		</nav>
 	</header>
-	</div>
-	<br><br><br><br><br><br>
 
 	<!-- ConvNet 설명 -->
-	<div style="margin-left: 25%; margin-right: 25%">
-		<h2 style="color: #CC3D3D" id="합성곱-신경망-Convolutional-Neural-Network-ConvNet"><a href="#합성곱-신경망-Convolutional-Neural-Network-ConvNet" class="headerlink" title="합성곱 신경망(Convolutional Neural Network, ConvNet)"></a>합성곱 신경망(Convolutional Neural Network, ConvNet)</h2><p>합성곱 신경망은 합성곱 연산을 사용하는 신경망 중 하나로서, 주로 음성 인식이나 시각적 이미지를 분석하는데 사용된다. 합성곱 신경망이 일반 신경망과 다른 점은 일반적인 신경망들이 이미지 데이터를 원본 그대로 1차원 신경망인 Fully-Connected layer(FC layer 혹은 Dense layer)에 입력되어 전체 특성을 학습하고 처리하는 데 반해, <strong>합성곱 신경망은 FC layer를 거치기 전에 Convolution 및 Poolling과 같은 데이터의 주요 특징 벡터를 추출하는 과정을 거친 후 FC layer로 입력되게 된다.</strong><br>그렇기 때문에 대부분의 이미지 인식 분야는 딥러닝 기반의 합성곱 신경망이 주를 이루고 있다.<br><br></p>
+	<div class="side-page-main-div" style="margin-left: 25%; margin-right: 25%">
+		<h2 style="color: #8C1DF3" id="합성곱-신경망-Convolutional-Neural-Network-ConvNet"><a href="#합성곱-신경망-Convolutional-Neural-Network-ConvNet" class="headerlink" title="합성곱 신경망(Convolutional Neural Network, ConvNet)"></a>합성곱 신경망(Convolutional Neural Network, ConvNet)</h2>
+		<br>
+		<p>합성곱 신경망은 합성곱 연산을 사용하는 신경망 중 하나로서, 주로 음성 인식이나 시각적 이미지를 분석하는데 사용된다. 합성곱 신경망이 일반 신경망과 다른 점은 일반적인 신경망들이 이미지 데이터를 원본 그대로 1차원 신경망인 Fully-Connected layer(FC layer 혹은 Dense layer)에 입력되어 전체 특성을 학습하고 처리하는 데 반해, <strong>합성곱 신경망은 FC layer를 거치기 전에 Convolution 및 Poolling과 같은 데이터의 주요 특징 벡터를 추출하는 과정을 거친 후 FC layer로 입력되게 된다.</strong><br>그렇기 때문에 대부분의 이미지 인식 분야는 딥러닝 기반의 합성곱 신경망이 주를 이루고 있다.<br><br></p>
 		<h2 style="color: #353535" id="ConvNet의-구조"><a href="#ConvNet의-구조" class="headerlink" title="ConvNet의 구조"></a>ConvNet의 구조</h2><p><img src="./static/images/convnet_info/convnet.jpg" width="700"/></p>
 		<p>합성곱 신경망은 기본적으로 위와 같은 구조로 이루어져 있다. 위 ConvNet을 크게 3덩어리로 짤라서 보면 아래와 같다.</p>
 		<blockquote>

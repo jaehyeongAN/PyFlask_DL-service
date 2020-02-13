@@ -1,100 +1,169 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<title>Flask for Deep ConvNet</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Flask for Deep ConvNet</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+	$(function(){
+		$(window).scroll(function(){
+			var navbar = $(this).scrollTop();
+			console.log(navbar);
+			var $navbar_tag = $('.navbar')
+			if(navbar > 10){
+				$navbar_tag.addClass('activated');
+			}else{
+				$navbar_tag.removeClass('activated');
+			}
+		})
+	})
+	// $(function(){
+	// 	$(window).resize(function (){
+	// 		var width_size = window.innerWidth;	// width값을 가져오기
+	// 		var $main_img = $('.main-img')
+	// 		if (width_size <= 500) {
+	// 			$main_img.addClass('mobilesize')
+	// 			alert('현재 브라우저 크기가 <= 500px');
+	// 		}else{
+	// 			$main_img.addClass('websize')
+	// 		}
+	// 	})
+	// })
 </script>
 <style type="text/css">
-	/*Logo*/
-	#h_img{width: 30px; height: 30px;}
-	/*카테고리*/
-	#layer_fixed
-	{
-		width:100%;
-		height: 130px;
-		color: #555;
-		position:fixed;
-		z-index:999;
-		top:0px;
-		left:0px;
-		right: 0px;
-		-webkit-box-shadow: 0 1px 2px 0 #777;
-		box-shadow: 0 1px 2px 0 #777;
-		background-color: white;
+	body{
+		font-family: Objective,sans-serif;
 	}
-	/*메뉴*/
-	#menu td{font-weight: bold; font-size: 20px;-webkit-transition: color 0.6s;  }
-	#menu td:hover{color: #CC3D3D; cursor: pointer;}
+	/* Logo */
+	#h_img{width: 30px; height: 30px;}
 
-	#info-box img:hover{opacity: 0.5; cursor: pointer;}
+	/* 카테고리 */
+	header{
+		width:100%;
+		position:fixed;
+	}
+	.navbar{
+		opacity: 0.8;
+	}
+	.navbar.activated{
+		opacity: 1;
+	}
+	.nav-link{
+		font-weight: bold;
+	}
+
+	/* contents-box */
+	.contents-box{
+		/*padding-top: 70px;*/
+	}
+	.main-img{
+		width: 100%;
+		max-height: 1010px;
+		min-height: 450px;
+		height: auto;
+		overflow: hidden;
+	}
+
+	/* info-box */
+	.info-box{
+		padding: 70px 0px 70px;
+	}
+	.info-box .info-txt{
+		font-weight: bold;
+		font-size: 1.5rem;
+	}
+	.info-box .info-img{
+		width: 70%
+	}
+	.info-box img:hover{opacity: 0.5; cursor: pointer;}
+	.link-to-go{
+		margin-top: 40px;
+		width: 80%;
+		text-align: center;
+		color: #353535;
+	}
+	/* gif-img-box */
+	.gif-img{
+		width: 100%;
+		max-height: 970px;
+		min-height: 300px;
+		height: auto;
+	}
 
 	/* 꼬리말 */
 	footer{
-		padding-top: 0;
+		padding: 0px 0px;
 		background-color: #353535;
 		width: 100%;
-		height: 140px;
+		height: auto;
+		position: relative;
 	}
-	#footer_table{color: white; width: 30%; padding-top: 5px;}
-	#footer_table td{text-align: center;}
-	#footer_table img{width: 23px; height: 23px}
-	#footer_table img:hover{opacity: 0.5; cursor: pointer;}
+	.footer_table{color: white; width: 30%;}
+	.footer_table td{text-align: center;}
+	.footer_table .footer-txt{font-weight: bold; color: #747474;}
+	.footer_table img{width: 23px; height: 23px}
+	.footer_table img:hover{opacity: 0.5; cursor: pointer;}
 </style>
-<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+<body>
 	<!-- 상단 카테고리 -->
-	<div id="layer_fixed" align="center">
 	<header>
-		<h1 align="center" style="color: #353535;"> Flask for Deep ConvNet</h1>
-		</table> 
-		<table id='menu' style=" text-align: center; " >
-			<tr>
-				<td onclick="location.href='/'">Home</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/convnet_info'">ConvNet?</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/object_detection_get'">Object Detection</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/nst_get'">Neural Style Transfer</td>
-			</tr>
-		</table>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="/"><h3 style="color: #8C1DF3;">Flask for DeepConvNet</h3></a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item active"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
+		      <li class="nav-item"><a class="nav-link" href="/convnet_info">ConvNet?</a></li>
+		      <li class="nav-item"><a class="nav-link" href="/object_detection_get">Object Detection</a></li>
+		      <li class="nav-item"><a class="nav-link" href="/nst_get">Neural Style Transfer</a></li>
+		    </ul>
+		  </div>
+		</nav>
 	</header>
-	</div>
-	<br><br><br><br><br><br>
 
 	<!-- 메인 이미지  -->
-	<div id="contents-box">
-		<img style="display: block; width: 100%; height: 700px;" src="/static/images/index/main-gif.gif" >
+	<div class="contents-box">
+		<img class="main-img" src="/static/images/index/main-png.png">
 	</div>
 
 	<!-- 페이지 연결 아이콘  -->
-	<div id="info-box" align="center">
+	<div class="info-box" align="center">
 		<h1 style="color: #353535">Enjoy! World Of ConvNet</h1>
-		<table style="width: 80%; text-align: center">
+		<table class="link-to-go">
 			<tr>
-				<td style="color: #353535"><h3>WHAT CONVNET?</h3></td>
-				<td style="color: #353535"><h3>OBJECT DETECTION</h3></td>
-				<td style="color: #353535"><h3>NEURL STYLE TRANSFER</h3></td>
+				<td class="info-txt">What ConvNet?</td>
+				<td class="info-txt">Object Detection</td>
+				<td class="info-txt">Neural Style Transfer</td>
 			</tr>
 			<tr>
-				<td><img style="width: 75%" src="/static/images/index/lightbulb.png" onclick="location.href='/convnet_info'"></td>
-				<td><img style="width: 75%" src="/static/images/index/microscope.png" onclick="location.href='/object_detection_get'"></td>
-				<td><img style="width: 75%" src="/static/images/index/pencil.png" onclick="location.href='/nst_get'"></td>
+				<td><img class="info-img" src="/static/images/index/lightbulb.png" onclick="location.href='/convnet_info'"></td>
+				<td><img class="info-img" src="/static/images/index/microscope.png" onclick="location.href='/object_detection_get'"></td>
+				<td><img class="info-img" src="/static/images/index/pencil.png" onclick="location.href='/nst_get'"></td>
 			</tr>
 		</table>
-		<br>
 	</div>
 
+	<div class="gif-img-box">
+		<img class="gif-img" src="/static/images/index/ai-connections.gif">
+	</div>
+	
 </body>
 <footer>
-	<table id="footer_table" align="center">
+	<br>
+	<table class="footer_table" align="center">
 		<tr>
-			<td style="font-weight: bold; color: #747474">ABOUT</td>
-			<td style="font-weight: bold; color: #747474">CONTACT</td>
-			<td style="font-weight: bold; color: #747474">ADDRESS</td>
+			<td class="footer-txt">ABOUT</td>
+			<td class="footer-txt">CONTACT</td>
+			<td class="footer-txt">ADDRESS</td>
 		</tr>
 		<tr>
 			<td><img src="/static/images/index/logo-github.png" onclick="location.href='https://github.com/jaehyeongAN'"></td>
@@ -103,10 +172,15 @@
 		</tr>
 		<tr>
 			<td><img src="/static/images/index/logo.png" onclick="location.href='https://jaehyeongan.github.io/'"></td>
-			<td style="color: #CC3D3D">nonamed000000@gmail.com</td>
-			<td>South Korea</td>
+			<td style="color: #A566FF">nonamed000000@gmail.com</td>
+			<td>Korea</td>
+		</tr>
+		<tr>
+			<td>&nbsp</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="font-weight: bold; color: #747474;">© 2019 JaeHyeong. All rights reserved</td>
 		</tr>
 	</table>
-	<p align="center" style="font-weight: bold; color: #747474;">© 2019 JaeHyeong. All rights reserved</p>
-	</footer>
+</footer>
 </html>

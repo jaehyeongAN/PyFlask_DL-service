@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<title>Flask for Deep ConvNet</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Flask for Deep ConvNet</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+	 $(function(){
+		$(window).scroll(function(){
+		var navbar = $(this).scrollTop();
+		console.log(navbar);
+		// var $header = $('header');
+		var $navbar_tag = $('.navbar')
+		if(navbar > 10){
+			$navbar_tag.addClass('activated');
+		}else{
+			$navbar_tag.removeClass('activated');
+		}
+	})
+	})
+</script>
 <script type="text/javascript">
 	function previewImage(targetObj, view_area) {
 	var preview = document.getElementById(view_area); //div id
@@ -50,26 +69,28 @@
 }
 </script>
 <style type="text/css">
+	body{
+		font-family: Objective,sans-serif;
+	}
 	/*Logo*/
 	#h_img{width: 30px; height: 30px;}
 	/*카테고리*/
-	#layer_fixed
-	{
+	header{
 		width:100%;
-		height: 130px;
-		color: #555;
 		position:fixed;
-		z-index:999;
-		top:0px;
-		left:0px;
-		right: 0px;
-		-webkit-box-shadow: 0 1px 2px 0 #777;
-		box-shadow: 0 1px 2px 0 #777;
-		background-color: white;
 	}
-	/*메뉴*/
-	#menu td{font-weight: bold; font-size: 20px;-webkit-transition: color 0.6s;  }
-	#menu td:hover{color: #CC3D3D; cursor: pointer;}
+	.navbar{
+		opacity: 0.8;
+	}
+	.navbar.activated{
+		opacity: 1;
+	}
+	.nav-link{
+		font-weight: bold;
+	}
+	.side-page-main-div{
+		padding-top: 100px;
+	}
 
 	/*Reference Images*/
 	.refer_img{
@@ -85,52 +106,52 @@
 </style>
 <body>
 	<!-- 상단 카테고리 -->
-	<div id="layer_fixed" align="center">
 	<header>
-		<h1 align="center" style="color: #353535;"> Flask for Deep ConvNet</h1>
-		</table> 
-		<table id='menu' style=" text-align: center; " >
-			<tr>
-				<td onclick="location.href='/'">Home</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/convnet_info'">ConvNet?</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/object_detection_get'">Object Detection</td>
-				<td width="20px"></td>
-				<td onclick="location.href='/nst_get'">Neural Style Transfer</td>
-			</tr>
-		</table>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="/"><h3 style="color: #8C1DF3">Flask for DeepConvNet</h3></a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
+		      <li class="nav-item"><a class="nav-link" href="/convnet_info">ConvNet?</a></li>
+		      <li class="nav-item"><a class="nav-link" href="/object_detection_get">Object Detection</a></li>
+		      <li class="nav-item active"><a class="nav-link" href="/nst_get">Neural Style Transfer</a></li>
+		    </ul>
+		  </div>
+		</nav>
 	</header>
-	</div>
-	<br><br><br><br><br><br>
-
-	<h1 align="center">Neural Sytle Transfer</h1>
 	
-	<!-- Reference Image 라디오 버튼 선택 -->
-	<form align="center" action="/nst_post" method="POST" enctype="multipart/form-data">
-		<h2 align="center" style="color: #353535;">Reference Images</h2>
-		<table align="center">
-			<tr>
-				<td><img class="refer_img" src="./static/images/nst_get/nst_reference1.jpg"></td>
-				<td><img class="refer_img" src="./static/images/nst_get/nst_reference2.jpg"></td>
-				<td><img class="refer_img" src="./static/images/nst_get/nst_reference3.jpg"></td>
-				<td><img class="refer_img" src="./static/images/nst_get/nst_reference4.jpg"></td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="refer_img" value="nst_reference1.jpg"></td>
-				<td><input type="radio" name="refer_img" value="nst_reference2.JPG"></td>
-				<td><input type="radio" name="refer_img" value="nst_reference3.jpg"></td>
-				<td><input type="radio" name="refer_img" value="nst_reference4.jpg"></td>
-			</tr>
-		</table>
+	<div class="side-page-main-div"></div>
+		<h1 align="center" style="color: #8C1DF3">Neural Sytle Transfer</h1>
 		<br>
-		<!-- Target Image 사용자 업로드 -->
-		<h2 align="center" style="color: #353535;">Target Image</h2>
-		<input type="file" name="user_img" id="user_img" value="userImage" onchange="previewImage(this,'view_area')"/>
-		<input type="submit" value="확인"/>
-		<br><br>
-		<div align="center" id='view_area'></div>
-	</form>
+		<!-- Reference Image 라디오 버튼 선택 -->
+		<form align="center" action="/nst_post" method="POST" enctype="multipart/form-data">
+			<h2 align="center" style="color: #353535;">Reference Images</h2>
+			<table align="center">
+				<tr>
+					<td><img class="refer_img" src="./static/images/nst_get/nst_reference1.jpg"></td>
+					<td><img class="refer_img" src="./static/images/nst_get/nst_reference2.jpg"></td>
+					<td><img class="refer_img" src="./static/images/nst_get/nst_reference3.jpg"></td>
+					<td><img class="refer_img" src="./static/images/nst_get/nst_reference4.jpg"></td>
+				</tr>
+				<tr>
+					<td><input type="radio" name="refer_img" value="nst_reference1.jpg"></td>
+					<td><input type="radio" name="refer_img" value="nst_reference2.JPG"></td>
+					<td><input type="radio" name="refer_img" value="nst_reference3.jpg"></td>
+					<td><input type="radio" name="refer_img" value="nst_reference4.jpg"></td>
+				</tr>
+			</table>
+			<br>
+			<!-- Target Image 사용자 업로드 -->
+			<h2 align="center" style="color: #353535;">Target Image</h2>
+			<input type="file" name="user_img" id="user_img" value="userImage" onchange="previewImage(this,'view_area')"/>
+			<input type="submit" value="확인"/>
+			<br><br>
+			<div align="center" id='view_area'></div>
+		</form>
+	</div>
 	<br><br><br>
 </body>
 </html> 

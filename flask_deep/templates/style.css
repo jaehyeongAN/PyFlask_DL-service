@@ -1,0 +1,72 @@
+body{
+	font-family: Objective,sans-serif;
+}
+/* Logo */
+#h_img{width: 30px; height: 30px;}
+
+/* 카테고리 */
+header{
+	width:100%;
+	position:fixed;
+}
+.navbar{
+	opacity: 0.8;
+}
+.navbar.activated{
+	opacity: 1;
+}
+.nav-link{
+	font-weight: bold;
+}
+
+/* contents-box */
+.contents-box{
+	/*padding-top: 70px;*/
+}
+.main-img{
+	width: 100%;
+	max-height: 1010px;
+	min-height: 450px;
+	height: auto;
+	overflow: hidden;
+}
+
+/* info-box */
+.info-box{
+	padding: 70px 0px 70px;
+}
+.info-box .info-txt{
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+.info-box .info-img{
+	width: 70%
+}
+.info-box img:hover{opacity: 0.5; cursor: pointer;}
+.link-to-go{
+	margin-top: 40px;
+	width: 80%;
+	text-align: center;
+	color: #353535;
+}
+/* gif-img-box */
+.gif-img{
+	width: 100%;
+	max-height: 970px;
+	min-height: 300px;
+	height: auto;
+}
+
+/* 꼬리말 */
+footer{
+	padding: 0px 0px;
+	background-color: #353535;
+	width: 100%;
+	height: auto;
+	position: relative;
+}
+.footer_table{color: white; width: 30%;}
+.footer_table td{text-align: center;}
+.footer_table .footer-txt{font-weight: bold; color: #747474;}
+.footer_table img{width: 23px; height: 23px}
+.footer_table img:hover{opacity: 0.5; cursor: pointer;}
