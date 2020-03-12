@@ -1,6 +1,6 @@
 import os, sys
 real_path = os.path.dirname(os.path.realpath(__file__))
-sub_path = "\\".join(real_path.split("\\")[:-1])
+sub_path = "/".join(real_path.split("/")[:-1])
 os.chdir(sub_path)
 
 from flask import Flask, escape, request,  Response, g, make_response
