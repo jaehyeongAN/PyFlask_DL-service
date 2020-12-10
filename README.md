@@ -1,6 +1,7 @@
 # PyFlask_DL-service
 Flask for Computer-Vision Prototype
-> Link : [http://54.180.150.154:5000/](http://54.180.150.154:5000/)
+> Link : ~~[http://54.180.150.154:5000/](http://54.180.150.154:5000/)~~ 
+(현재 서버는 내렸습니다!😅)
 
 ### Function 
 * Object Detection by Darkflow with Fast YOLO-V2
